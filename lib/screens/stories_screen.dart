@@ -31,6 +31,13 @@ class _StoriesScreenState extends State<StoriesWidgetScreen> {
   @override
   void initState() {
     super.initState();
+    if (widget.stories[index].type == MediaType.image) {
+      setState(() {
+        Future.delayed(const Duration(seconds: 5)).then((_) {
+          _swipeLeft();
+        });
+      });
+    }
 
     _videoPlayerController =
         VideoPlayerController.file(File(widget.stories[index].url))
