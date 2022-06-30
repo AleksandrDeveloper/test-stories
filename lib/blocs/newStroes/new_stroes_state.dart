@@ -6,6 +6,8 @@ abstract class NewStroesState {}
 class NewStroesLoading extends NewStroesState {}
 
 class NewStroesLoaded extends NewStroesState {
-  List<Story> stories;
-  NewStroesLoaded({required this.stories});
+  final List<Story> stories;
+  NewStroesLoaded({
+    required this.stories,
+  });
 }

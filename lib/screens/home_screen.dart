@@ -2,9 +2,9 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:test_stories/camera.dart';
-import 'package:test_stories/stories_screen.dart';
-import 'blocs/newStroes/new_stroes_bloc.dart';
+import 'package:test_stories/screens/camera_screen.dart';
+import 'package:test_stories/screens/stories_screen.dart';
+import '../blocs/newStroes/new_stroes_bloc.dart';
 
 class MyHomePage extends StatelessWidget {
   const MyHomePage({Key? key}) : super(key: key);
@@ -66,7 +66,7 @@ class MyHomePage extends StatelessWidget {
                   }
                   if (state is NewStroesLoaded) {
                     return SizedBox(
-                      height: 70,
+                      height: 80,
                       width: MediaQuery.of(context).size.width - 79,
                       child: ListView.builder(
                           scrollDirection: Axis.horizontal,
@@ -74,31 +74,35 @@ class MyHomePage extends StatelessWidget {
                           itemBuilder: (context, index) {
                             return Column(
                               children: [
-                                Container(
-                                  width: 50.0,
-                                  height: 50.0,
-                                  decoration: BoxDecoration(
-                                    color: Colors.black,
-                                    borderRadius: BorderRadius.circular(100),
-                                  ),
-                                  child: GestureDetector(
-                                    onTap: () async {
-                                      await Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                          builder: (context) =>
-                                              StoriesWidgetScreen(
-                                            stories: state.stories,
-                                            index: index,
-                                          ),
-                                        ),
-                                      );
-                                    },
-                                    child: ClipRRect(
+                                Padding(
+                                  padding: const EdgeInsets.all(4.0),
+                                  child: Container(
+                                    width: 50.0,
+                                    height: 50.0,
+                                    decoration: BoxDecoration(
+                                      color: Colors.black,
                                       borderRadius: BorderRadius.circular(100),
-                                      child: Image.network(
-                                        state.stories[index].user.imageUrl,
-                                        width: 40,
-                                        height: 40,
+                                    ),
+                                    child: GestureDetector(
+                                      onTap: () async {
+                                        await Navigator.of(context).push(
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                StoriesWidgetScreen(
+                                              stories: state.stories,
+                                              index: index,
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                      child: ClipRRect(
+                                        borderRadius:
+                                            BorderRadius.circular(100),
+                                        child: Image.network(
+                                          state.stories[index].user.imageUrl,
+                                          width: 40,
+                                          height: 40,
+                                        ),
                                       ),
                                     ),
                                   ),

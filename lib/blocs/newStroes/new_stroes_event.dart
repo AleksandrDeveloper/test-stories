@@ -14,9 +14,13 @@ class NewStories extends NewStroesEvent {
 }
 
 class RemuveStories extends NewStroesEvent {
+  final BuildContext context;
   final Story story;
-  RemuveStories({required this.story});
+  RemuveStories({
+    required this.story,
+    required this.context,
+  });
 
   @override
-  List<Object?> get props => [story];
+  List<Object?> get props => [story, context];
 }

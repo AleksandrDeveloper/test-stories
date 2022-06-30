@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'blocs/newStroes/new_stroes_bloc.dart';
-import 'home_page.dart';
+import 'screens/home_screen.dart';
 
 void main() {
   runApp(MultiBlocProvider(providers: [

@@ -1,9 +1,9 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:test_stories/photo.dart';
-import 'package:test_stories/video_screen.dart';
-import 'home_page.dart';
+import 'package:test_stories/screens/photo_screen.dart';
+import 'package:test_stories/screens/video_screen.dart';
+import 'home_screen.dart';
 
 class Camera extends StatefulWidget {
   const Camera({Key? key}) : super(key: key);
@@ -102,6 +102,7 @@ class _CameraState extends State<Camera> {
     try {
       final imageX = await ImagePicker().pickImage(source: ImageSource.gallery);
       final imageGalery = imageX!.path;
+      // ignore: use_build_context_synchronously
       await Navigator.of(context).push(
         MaterialPageRoute(
           builder: (context) => DisplayPictureScreen(
