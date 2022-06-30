@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -18,10 +20,10 @@ class _CameraState extends State<Camera> {
     return c.first;
   }
 
-  double? size;
   Widget? indicator;
   CameraController? _controller;
   Future<void>? _controllerInizializer;
+  double _time = 0.0;
 
   @override
   void initState() {
@@ -29,7 +31,7 @@ class _CameraState extends State<Camera> {
       setState(() {
         _controller = CameraController(camera, ResolutionPreset.high);
         _controllerInizializer = _controller!.initialize();
-        size = 70;
+
         indicator = null;
       });
     });
@@ -63,10 +65,10 @@ class _CameraState extends State<Camera> {
 
   void _startVideo() async {
     await _controllerInizializer;
-    size = 50;
-
+    _buttonCircular();
     try {
       await _controller!.startVideoRecording();
+
       Future.delayed(const Duration(seconds: 15)).then((_) {
         _stopVideo();
       });
@@ -79,9 +81,16 @@ class _CameraState extends State<Camera> {
     }
   }
 
+  void _buttonCircular() {
+    Timer.periodic(Duration(seconds: 1), (timer) {
+      setState(() {
+        _time = _time + 0.0666;
+      });
+    });
+  }
+
   void _stopVideo() async {
     await _controllerInizializer;
-    size = 70;
 
     try {
       XFile video = await _controller!.stopVideoRecording();
@@ -191,13 +200,29 @@ class _CameraState extends State<Camera> {
                           onLongPressStart: (LongPressStartDetails details) =>
                               _startVideo(),
                           onLongPressEnd: (details) => _stopVideo(),
-                          child: Container(
-                            width: size,
-                            height: size,
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(100.0),
-                            ),
+                          child: Stack(
+                            children: [
+                              SizedBox(
+                                height: 76,
+                                width: 76,
+                                child: CircularProgressIndicator(
+                                    value: _time,
+                                    valueColor: const AlwaysStoppedAnimation(
+                                        Color.fromARGB(108, 255, 255, 255))),
+                              ),
+                              Positioned(
+                                top: 3,
+                                left: 3,
+                                child: Container(
+                                  width: 70,
+                                  height: 70,
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(100.0),
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                         const SizedBox(
