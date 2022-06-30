@@ -1,9 +1,7 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:video_player/video_player.dart';
-
 import '../blocs/newStroes/new_stroes_bloc.dart';
 import 'home_screen.dart';
 import '../modals/stories_modal.dart';
@@ -44,7 +42,11 @@ class _StoriesScreenState extends State<StoriesWidgetScreen> {
 
   void _swipeLeft() {
     setState(() {
-      index += 1;
+      if (index + 1 < widget.stories.length) {
+        index += 1;
+      } else {
+        index = 0;
+      }
     });
   }
 
