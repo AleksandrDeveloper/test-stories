@@ -67,6 +67,9 @@ class _CameraState extends State<Camera> {
 
     try {
       await _controller!.startVideoRecording();
+      Future.delayed(const Duration(seconds: 15)).then((_) {
+        _stopVideo();
+      });
       setState(() {
         // ignore: avoid_print
         print('video started');
@@ -79,6 +82,7 @@ class _CameraState extends State<Camera> {
   void _stopVideo() async {
     await _controllerInizializer;
     size = 70;
+
     try {
       XFile video = await _controller!.stopVideoRecording();
       // ignore: avoid_print
