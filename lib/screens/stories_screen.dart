@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -9,6 +10,7 @@ import '../modals/stories_modal.dart';
 class StoriesWidgetScreen extends StatefulWidget {
   final List<Story> stories;
   int index;
+
   StoriesWidgetScreen({
     super.key,
     required this.stories,
@@ -27,24 +29,35 @@ class _StoriesScreenState extends State<StoriesWidgetScreen> {
 
   // ignore: unused_field
   VideoPlayerController? _videoPlayerController;
-
+  double _time = 0.0;
   @override
   void initState() {
     super.initState();
-    if (widget.stories[index].type == MediaType.image) {
-      setState(() {
-        Future.delayed(const Duration(seconds: 5)).then((_) {
-          _swipeLeft();
-        });
-      });
-    }
-
+    _stepFile();
     _videoPlayerController =
         VideoPlayerController.file(File(widget.stories[index].url))
           ..initialize().then((value) => setState(() {}));
     _videoPlayerController!.value.isPlaying
         ? _videoPlayerController!.pause()
         : _videoPlayerController!.play();
+  }
+
+  void _stepFile() {
+    if (widget.stories[index].type == MediaType.image) {
+      setState(() {
+        Future.delayed(const Duration(seconds: 5)).then((_) {
+          _swipeLeft();
+          _stepFile();
+        });
+      });
+    } else if (widget.stories[index].type == MediaType.video) {
+      setState(() {
+        Future.delayed(const Duration(seconds: 15)).then((_) {
+          _swipeLeft();
+          _stepFile();
+        });
+      });
+    }
   }
 
   void _swipeLeft() {

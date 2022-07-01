@@ -206,9 +206,11 @@ class _CameraState extends State<Camera> {
                                 height: 76,
                                 width: 76,
                                 child: CircularProgressIndicator(
-                                    value: _time,
-                                    valueColor: const AlwaysStoppedAnimation(
-                                        Color.fromARGB(108, 255, 255, 255))),
+                                  value: _time,
+                                  valueColor: const AlwaysStoppedAnimation(
+                                    Color.fromARGB(108, 255, 255, 255),
+                                  ),
+                                ),
                               ),
                               Positioned(
                                 top: 3,
