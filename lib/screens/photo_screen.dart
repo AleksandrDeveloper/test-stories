@@ -53,7 +53,7 @@ class DisplayPictureScreen extends StatelessWidget {
                 ),
                 child: const Center(
                   child: Text(
-                    'Записать',
+                    'Опубликовать',
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 18,

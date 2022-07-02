@@ -80,7 +80,7 @@ class _VideoAppState extends State<VideoApp> {
                   ),
                   child: const Center(
                     child: Text(
-                      'Записать',
+                      'Опубликовать',
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 18,
