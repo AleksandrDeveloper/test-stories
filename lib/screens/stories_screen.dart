@@ -7,6 +7,7 @@ import '../blocs/newStroes/new_stroes_bloc.dart';
 import 'home_screen.dart';
 import '../modals/stories_modal.dart';
 
+// ignore: must_be_immutable
 class StoriesWidgetScreen extends StatefulWidget {
   final List<Story> stories;
   int index;
@@ -19,6 +20,7 @@ class StoriesWidgetScreen extends StatefulWidget {
 
   @override
   State<StoriesWidgetScreen> createState() =>
+      // ignore: no_logic_in_create_state
       _StoriesScreenState(stories, index);
 }
 
@@ -29,7 +31,8 @@ class _StoriesScreenState extends State<StoriesWidgetScreen> {
 
   // ignore: unused_field
   VideoPlayerController? _videoPlayerController;
-  double _time = 0.0;
+  // ignore: prefer_final_fields, unused_field
+  final double _time = 0.0;
   @override
   void initState() {
     super.initState();
@@ -46,21 +49,21 @@ class _StoriesScreenState extends State<StoriesWidgetScreen> {
     if (widget.stories[index].type == MediaType.image) {
       setState(() {
         Future.delayed(const Duration(seconds: 5)).then((_) {
-          _swipeLeft();
+          _nextFile();
           _stepFile();
         });
       });
     } else if (widget.stories[index].type == MediaType.video) {
       setState(() {
         Future.delayed(const Duration(seconds: 15)).then((_) {
-          _swipeLeft();
+          _nextFile();
           _stepFile();
         });
       });
     }
   }
 
-  void _swipeLeft() {
+  void _nextFile() {
     setState(() {
       if (index + 1 < widget.stories.length) {
         index += 1;
@@ -73,7 +76,7 @@ class _StoriesScreenState extends State<StoriesWidgetScreen> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => _swipeLeft(),
+      onTap: () => _nextFile(),
       child: Stack(
         children: [
           Positioned.fill(
@@ -111,18 +114,19 @@ class _StoriesScreenState extends State<StoriesWidgetScreen> {
                 ),
                 actions: [
                   IconButton(
-                      onPressed: () async {
-                        BlocProvider.of<NewStroesBloc>(context).add(
-                          RemuveStories(
-                            story: widget.stories[index],
-                            context: context,
-                          ),
-                        );
-                      },
-                      icon: const Icon(
-                        Icons.delete,
-                        color: Colors.red,
-                      )),
+                    onPressed: () async {
+                      BlocProvider.of<NewStroesBloc>(context).add(
+                        RemuveStories(
+                          story: widget.stories[index],
+                          context: context,
+                        ),
+                      );
+                    },
+                    icon: const Icon(
+                      Icons.delete,
+                      color: Colors.red,
+                    ),
+                  ),
                 ],
               ),
             ),

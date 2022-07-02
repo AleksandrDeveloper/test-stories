@@ -13,6 +13,7 @@ class VideoApp extends StatefulWidget {
   const VideoApp({super.key, required this.videoPath});
 
   @override
+  // ignore: library_private_types_in_public_api, no_logic_in_create_state
   _VideoAppState createState() => _VideoAppState(videoPath);
 }
 
@@ -26,13 +27,17 @@ class _VideoAppState extends State<VideoApp> {
     super.initState();
 
     _controller = VideoPlayerController.file(File(videoPath))
-      ..initialize().then((_) {
-        setState(() {
-          _controller!.value.isPlaying
-              ? _controller!.pause()
-              : _controller!.play();
-        });
-      });
+      ..initialize().then(
+        (_) {
+          setState(
+            () {
+              _controller!.value.isPlaying
+                  ? _controller!.pause()
+                  : _controller!.play();
+            },
+          );
+        },
+      );
   }
 
   @override

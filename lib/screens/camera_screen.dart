@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -27,14 +26,18 @@ class _CameraState extends State<Camera> {
 
   @override
   void initState() {
-    getCamera().then((camera) {
-      setState(() {
-        _controller = CameraController(camera, ResolutionPreset.high);
-        _controllerInizializer = _controller!.initialize();
+    getCamera().then(
+      (camera) {
+        setState(
+          () {
+            _controller = CameraController(camera, ResolutionPreset.high);
+            _controllerInizializer = _controller!.initialize();
 
-        indicator = null;
-      });
-    });
+            indicator = null;
+          },
+        );
+      },
+    );
     super.initState();
   }
 
@@ -59,7 +62,8 @@ class _CameraState extends State<Camera> {
         ),
       );
     } catch (e) {
-      print(e);
+      // ignore: avoid_print
+      print('Ошибка фото $e');
     }
   }
 
@@ -72,17 +76,15 @@ class _CameraState extends State<Camera> {
       Future.delayed(const Duration(seconds: 15)).then((_) {
         _stopVideo();
       });
-      setState(() {
-        // ignore: avoid_print
-        print('video started');
-      });
+      setState(() {});
     } on CameraException catch (e) {
-      print('Error starting to record video: $e');
+      // ignore: avoid_print
+      print('Ошибка записи видео: $e');
     }
   }
 
   void _buttonCircular() {
-    Timer.periodic(Duration(seconds: 1), (timer) {
+    Timer.periodic(const Duration(seconds: 1), (timer) {
       setState(() {
         _time = _time + 0.0666;
       });
@@ -94,8 +96,7 @@ class _CameraState extends State<Camera> {
 
     try {
       XFile video = await _controller!.stopVideoRecording();
-      // ignore: avoid_print
-      print('video stoped');
+
       // ignore: use_build_context_synchronously
       await Navigator.of(context).push(
         MaterialPageRoute(
@@ -106,7 +107,7 @@ class _CameraState extends State<Camera> {
       );
     } on CameraException catch (e) {
       // ignore: avoid_print
-      print('Error stopping video recording: $e');
+      print('Ошибка остановки видео: $e');
       return null;
     }
   }
@@ -123,7 +124,11 @@ class _CameraState extends State<Camera> {
           ),
         ),
       );
-    } catch (e) {}
+    } catch (e) {
+      // ignore: avoid_print
+      print('Ошибка открытия галереи $e');
+      return null;
+    }
   }
 
   @override
@@ -136,8 +141,9 @@ class _CameraState extends State<Camera> {
             builder: ((context, snapshot) {
               if (snapshot.connectionState == ConnectionState.done) {
                 return AspectRatio(
-                    aspectRatio: _controller!.value.aspectRatio,
-                    child: CameraPreview(_controller!));
+                  aspectRatio: _controller!.value.aspectRatio,
+                  child: CameraPreview(_controller!),
+                );
               } else {
                 return const Center(
                   child: CircularProgressIndicator(),
@@ -208,8 +214,9 @@ class _CameraState extends State<Camera> {
                                 child: CircularProgressIndicator(
                                   value: _time,
                                   valueColor: const AlwaysStoppedAnimation(
-                                    Color.fromARGB(108, 255, 255, 255),
+                                    Colors.white,
                                   ),
+                                  backgroundColor: Colors.white30,
                                 ),
                               ),
                               Positioned(

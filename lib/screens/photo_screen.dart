@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:test_stories/screens/home_screen.dart';
 import 'package:test_stories/modals/data.dart';
-
 import '../blocs/newStroes/new_stroes_bloc.dart';
 import '../modals/stories_modal.dart';
 
